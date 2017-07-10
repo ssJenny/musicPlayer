@@ -19,5 +19,5 @@ new Vue({
     el: '#app',
     router,
     //  创建元素的函数，把APP组件传递进来，再渲染到主页中
-    render:h=>h(App) // APP为APP.Vue
+    render:h=>h(App)
 })
