@@ -16,6 +16,11 @@ axios
 slot标签
 用于父组件向子组件传递元素
 
+Object.assign 参数合并
 
 
 
+### 请求歌单
+注意点：
+
+请求主机需伪装为http://y.qq.com

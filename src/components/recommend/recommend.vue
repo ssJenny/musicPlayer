@@ -1,39 +1,53 @@
 <template>
   <div class="recommend">
-    <div class="recommend-content">
-      <div class="slider-wrapper" v-if="recommends.length" >
-        <slider>
-          <div v-for="item in recommends">
-            <a :href="item.linkUrl">
-              <img :src="item.picUrl" alt=""/>
-            </a>
-          </div>
-        </slider>
+    <scroll>
+      <div class="recommend-content">
+        <div class="slider-wrapper" v-if="recommends.length" >
+          <slider>
+            <div v-for="item in recommends">
+              <a :href="item.linkUrl">
+                <img :src="item.picUrl" alt=""/>
+              </a>
+            </div>
+          </slider>
+        </div>
+        <div class="recommend-list">
+          <h1 class="list-title">热门歌单推荐</h1>
+          <ul>
+            <li v-for="item in disclist" class="item">
+              <div class="icon">
+                <img :src="item.imgurl" width="60" height="60" alt="">
+              </div>
+              <div class="text">
+                <h2 class="name" v-html="item.creator.name"></h2>
+                <p class="desc" v-html="item.dissname"></p>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="recommend-list">
-        <h1 class="list-title">热门歌单推荐</h1>
-        <ul>
-        </ul>
-      </div>
-    </div>
+    </scroll>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 
-  import { getRecommend } from 'api/recommend'  // 只引用recommend.js中的getcommend方法
+  import { getRecommend, getDiscList } from 'api/recommend'  // 只引用recommend.js中的getcommend方法
   import { ERR_OK } from 'api/config'
   import Slider from 'base/slider/slider.vue'
+  import Scroll from 'base/scroll/scroll.vue'
 
   export default {
       // 实例被创建之后
       data() {
           return {
-             recommends:{}
+             recommends:{},
+             disclist: {}
           }
       },
       created() {
           this._getRecommend()
+          this._getDiscList()
       },
       methods: {
           _getRecommend(){
@@ -43,10 +57,19 @@
 
                   }
               })
+          },
+          _getDiscList(){
+            getDiscList().then((res) =>{
+              if(res.code == ERR_OK){
+                this.disclist = res.data.list
+
+              }
+            })
           }
       },
     components: {
-      Slider
+      Slider,
+      Scroll
     }
   }
 

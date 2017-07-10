@@ -25,7 +25,6 @@ var app = express()
 
 var apiRoutes = express.Router()
 
-//通过node修改本地服务、请求头
 apiRoutes.get('/getDiscList', function (req, res) {
   var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
   axios.get(url, {

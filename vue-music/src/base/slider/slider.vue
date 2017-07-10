@@ -1,5 +1,4 @@
 <template>
-  <!--ref 绑定元素 在js中通过this.$refs.XX获取元素-->
   <div class="slider" ref="slider">
     <div class="slider-group" ref="sliderGroup">
       <slot>
@@ -12,18 +11,18 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import BScroll from 'better-scroll'
   import {addClass} from 'common/js/dom'
+  import BScroll from 'better-scroll'
 
   export default {
     name: 'slider',
-    data() {
+    data(){
       return {
         dots: [],
         currentPageIndex: 0
       }
     },
-    props: {
+    props: {          //轮播组件初始化参数
       loop: {
         type: Boolean,
         default: true
@@ -32,48 +31,42 @@
         type: Boolean,
         default: true
       },
-//      初始化时间
       interval: {
         type: Number,
         default: 4000
       }
     },
-//    编译完成之后
+
     mounted() {
       setTimeout(() => {
         this._setSliderWidth()
-        this._initDots()
         this._initSlider()
-
+        this._initDots()
         if (this.autoPlay) {
-          this._play()
+//          this._play()
         }
       }, 20)
     },
-    methods: {
-      _setSliderWidth()
-      {
-        this.children = this.$refs.sliderGroup.children
 
-        let width = 0 // 图片容器宽度
-        let sliderWidth = this.$refs.slider.clientWidth // 每个图片宽度
+    methods: {
+      _setSliderWidth(){
+        this.children = this.$refs.sliderGroup.children
+        let width = 0       //图片容器的宽度
+        let sliderWidth = this.$refs.slider.clientWidth
+                           //每张图片的宽度
         for (let i = 0; i < this.children.length; i++) {
           let child = this.children[i]
           addClass(child, 'slider-item')
-
           child.style.width = sliderWidth + 'px'
           width += sliderWidth
         }
-        if (this.loop) {
-          width += 2 * sliderWidth
-        }
         this.$refs.sliderGroup.style.width = width + 'px'
       },
+
       _initSlider() {
-//          better-scroll轮播插件
         this.slider = new BScroll(this.$refs.slider, {
-          scrollX: true,   // 水平滚动方向
-          scrollY: false, // 垂直滚动方向
+          scrollX: true,
+          scrollY: false,
           momentum: false,
           snap: true,
           snapLoop: this.loop,
@@ -93,9 +86,6 @@
           }
         })
       },
-      _initDots() {
-        this.dots = new Array(this.children.length)
-      },
 
       _play() {
         let pageIndex = this.currentPageIndex + 1
@@ -105,9 +95,27 @@
         this.timer = setTimeout(() => {
           this.slider.goToPage(pageIndex, 0, 400)
         }, this.interval)
+      },
+
+      _initDots() {
+        this.dots = new Array(this.children.length)
       }
+
     }
+
+
+
+
+
+
+
   }
+
+
+
+
+
+
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
