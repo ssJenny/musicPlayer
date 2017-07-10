@@ -25,10 +25,18 @@ var app = express()
 
 var apiRoutes = express.Router()
 
-//通过node修改本地服务、请求头
+
+/****
+ * 通过node修改本地服务、请求头
+ * QQ音乐官网数据请求必须通过https://c.y.qq.com/主机进行获取
+ * 将自己的本地服务伪装成QQ音乐官网
+ *
+ */
 apiRoutes.get('/getDiscList', function (req, res) {
+
   var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
   axios.get(url, {
+    //设置请求头
     headers: {
       referer: 'https://c.y.qq.com/',
       host: 'c.y.qq.com'

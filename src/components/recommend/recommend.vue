@@ -1,12 +1,13 @@
 <template>
   <div class="recommend">
-    <scroll>
-      <div class="recommend-content">
+
+      <scroll class="recommend-content" ref="scroll" :data="disclist">
+        <div>
         <div class="slider-wrapper" v-if="recommends.length" >
           <slider>
             <div v-for="item in recommends">
               <a :href="item.linkUrl">
-                <img :src="item.picUrl" alt=""/>
+                <img :src="item.picUrl" alt="" @load="loadImage"/>
               </a>
             </div>
           </slider>
@@ -16,7 +17,7 @@
           <ul>
             <li v-for="item in disclist" class="item">
               <div class="icon">
-                <img :src="item.imgurl" width="60" height="60" alt="">
+                <img width="60" height="60" alt=""  v-lazy="item.imgurl">
               </div>
               <div class="text">
                 <h2 class="name" v-html="item.creator.name"></h2>
@@ -25,8 +26,9 @@
             </li>
           </ul>
         </div>
-      </div>
-    </scroll>
+        </div>
+      </scroll>
+
   </div>
 </template>
 
@@ -40,23 +42,25 @@
   export default {
       // 实例被创建之后
       data() {
-          return {
-             recommends:{},
-             disclist: {}
-          }
+        return {
+           recommends:{},
+           disclist: {}
+        }
       },
       created() {
-          this._getRecommend()
-          this._getDiscList()
+//          获取轮播数据
+        this._getRecommend()
+//        获取歌单数据
+        this._getDiscList()
       },
       methods: {
           _getRecommend(){
-              getRecommend().then((res) =>{
-                  if(res.code == ERR_OK){
-                      this.recommends = res.data.slider
+            getRecommend().then((res) =>{
+              if(res.code == ERR_OK){
+                this.recommends = res.data.slider
 
-                  }
-              })
+              }
+            })
           },
           _getDiscList(){
             getDiscList().then((res) =>{
@@ -65,7 +69,16 @@
 
               }
             })
+          },
+        loadImage(){
+//              轮播图初始化滚动组件刷新
+          if(!this.checkedLoad){
+            this.checkedLoad = true
+            this.$refs.scroll.refresh()
+
+
           }
+        }
       },
     components: {
       Slider,

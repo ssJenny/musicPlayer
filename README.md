@@ -21,6 +21,4 @@ Object.assign 参数合并
 
 
 ### 请求歌单
-注意点：
-
-请求主机需伪装为http://y.qq.com
+请求歌单需将自己伪装为http://y.qq.com
