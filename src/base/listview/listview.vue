@@ -16,6 +16,7 @@
         </uL>
       </li>
     </ul>
+    <!--阻止默认点击事件-->
     <div class="list-shortcut" @touchstart.stop.prevent="onShortcutTouchStart">
       <ul>
         <li v-for="(item, index) in shortcutList" :data-index="index" class="item"
@@ -42,6 +43,7 @@
       }
     },
     computed: {
+//        ??????
       shortcutList() {
         return this.data.map((group) => {
           return group.title.substr(0,1)
@@ -71,19 +73,20 @@
         this.$emit('select', item)
       },
       onShortcutTouchStart(e) {
-        let anchorIndex = getData(e.target, 'index')
+        let anchorIndex = getData(e.target, 'index')  //点击位置
         let firstTouch = e.touches[0]
-
-        this._scrollTo(anchorIndex)
+//
+        this._scrollTo(anchorIndex)  // 移动到点击位置
       },
       refresh() {
         this.$refs.listview.refresh()
       },
       scroll(pos) {
-        this.scrollY = pos.y
+        this.scrollY = pos.y  //滚动的top值
       },
       _calculateHeight() {
-        this.listHeight = []
+
+        this.listHeight = [] // 装标签距顶部的高度
         const list = this.$refs.listGroup
         let height = 0
         this.listHeight.push(height)
@@ -93,16 +96,19 @@
           this.listHeight.push(height)
         }
       },
+//      滚动到指定位置
       _scrollTo(index) {
         if(!index && index !== 0) {
           return
         }
+//        边界处理
         if(index < 0){
           index = 0
         }
         else if(index > this.listHeight.length - 2) {
           index = this.listHeight.length - 2
         }
+//        赋值滚动距离
         this.scrollY = -this.listHeight[index]
         this.$refs.listview.scrollToElement(this.$refs.listGroup[index],0)
       }
@@ -110,6 +116,7 @@
     watch: {
       data() {
         setTimeout(() => {
+//            计算高度
           this._calculateHeight()
         }, 20)
       },
@@ -124,6 +131,9 @@
         for(let i = 0; i < listHeight.length-1; i++) {
           let height1 = listHeight[i]
           let height2 = listHeight[i+1]
+          /**
+           * 确定滚动位置，为右边标签添加对应的文字颜色
+           */
           if(-newY >= height1 && -newY < height2) {
             this.currentIndex = i
             return

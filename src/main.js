@@ -6,6 +6,7 @@ import router from './router'
 import fastclick from 'fastclick'  // 解决移动端300ms的延迟
 import 'common/stylus/index.styl'
 import lazyLoad from 'vue-lazyload'
+import store from './store'     //导入store
 
 
 fastclick.attach(document.body)
@@ -19,6 +20,7 @@ Vue.use(lazyLoad, {
 new Vue({
     el: '#app',
     router,
+    store,
     //  创建元素的函数，把APP组件传递进来，再渲染到主页中
     render:h=>h(App)
 })

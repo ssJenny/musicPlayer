@@ -4,6 +4,7 @@ import Recommend from 'components/recommend/recommend'
 import Rank from 'components/rank/rank'
 import Singer from 'components/singer/singer'
 import Search from 'components/search/search'
+import SingerDetail from 'components/singer-detail/singer-detail'
 
 
 
@@ -15,7 +16,16 @@ export default new Router({
     {path: "/", redirect:'/recommend'},
     {path: "/recommend", component: Recommend},
     {path: "/rank", component: Rank},
-    {path: "/singer", component: Singer},
-    {path: "/search", component: Search}
+    {path: "/search", component: Search},
+    {
+      path: "/singer",
+      component: Singer,
+      children: [
+        {
+          path: ':id',
+          component: SingerDetail
+        }
+      ]
+    }
   ]
 })
