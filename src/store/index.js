@@ -4,11 +4,11 @@ import * as actions from './actions'
 import * as getters from './getters'
 import state from './state'
 import mutations from './mutations'
-import createLogger from 'vuex/dist/logger'     //调试插件,显示路由数据传递状态日志
+import createLogger from 'vuex/dist/logger'
 
 Vue.use(Vuex)
 
-const debug = process.env.NODE_ENV !== 'production'       //开发环境调试
+const debug = process.env.NODE_ENV !== 'production'
 
 export default new Vuex.Store({
   actions,

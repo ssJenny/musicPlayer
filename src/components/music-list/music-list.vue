@@ -17,7 +17,7 @@
     <scroll :data="songs" @scroll="scroll"
             :listen-scroll="listenScroll" :probe-type="probeType" class="list" ref="list">
       <div class="song-list-wrapper">
-        <song-list :songs="songs" :rank="rank"></song-list>
+        <song-list :songs="songs" :rank="rank" @select="selectItem"></song-list>
       </div>
     </scroll>
   </div>
@@ -76,7 +76,17 @@
       },
       back() {
         this.$router.back()
-      }
+      },
+//      接收子组件传递过来的点击事件
+      selectItem(item, index) {
+        this.selectPlay({
+          list: this.songs,
+          index
+        })
+      },
+      ...mapActions([
+        'selectPlay'
+      ])
     },
     components: {
       Scroll,

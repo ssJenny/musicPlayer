@@ -8,6 +8,7 @@ import 'common/stylus/index.styl'
 import lazyLoad from 'vue-lazyload'
 import store from './store'     //导入store
 
+import 'common/stylus/index.styl'
 
 fastclick.attach(document.body)
 

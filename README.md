@@ -135,8 +135,36 @@ if (res.code === ERR_OK) {
 - [mapGetters工具函数](http://www.imooc.com/article/14741)
 
 得到点击的歌手信息。
+
 mapGetters 工具函数会将 store 中的 getter 映射到局部计算属性中
 - 歌手信息通过路由传递
 - 对应的歌曲信息通过向QQ音乐进行获取
+
+### 歌曲播放
+主要知识：[vuex工作模式](https://vuex.vuejs.org/zh-cn/intro.html)
+##### store仓库
+1. 逻辑思路
+- state.js罗列播放使用的变量
+```
+const state = {
+  singer: {},
+  playing: false,   //播放状态
+  fullScreen: false, //播放器的展开与收起
+  playlist: [],  //播放列表
+  sequenceList: [], //播放顺序列表
+  mode: playMode.sequence, //播放模式
+  currentIndex: -1 // 当前播放索引 
+}
+```
+- getters罗列mutation-type.js可以使用的变量
+- mutation-type.js罗列mutation可以使用的方法
+- 播放组件应为全局组件，在App.vue中注册
+- song-list 负责获取歌曲数据
+- music-list 负责将数据写入scroll中
+2. ui
+- 歌曲播放不是路由跳转，而是播放器的放大和缩小，fullScreen的变化
+- player.vue的布局：一个全屏播放，一个mini缩小版播放器
+- audio标签
+
 
 
